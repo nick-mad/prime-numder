@@ -1,19 +1,23 @@
 <?php
 
-$n = 2;
+$n = 0;
 $m = 6;
 
 $middle = (int)(($n + $m) / 2);
 $nextPrime = (int)gmp_nextprime($middle);
+if ($nextPrime >= $m) {
+    $nextPrime = 'Нет простого числа которое удовлетворяет условиям поиска';
+}
 $tmp = $middle;
-do{
-    $prevPrime =  (int)gmp_nextprime($tmp--);
-    if($tmp < 0){
-        $prevPrime = 'Для среднего числа ' . $middle . ' нет простого числа меньшего за него';
+do {
+    $prevPrime = (int)gmp_nextprime($tmp--);
+    if ($tmp < 0 || $prevPrime <= $n) {
+        $prevPrime = 'Нет простого числа которое удовлетворяет условиям поиска';
         break;
     }
-}while ($nextPrime === $prevPrime);
+} while ($prevPrime >= $middle);
 
-echo $middle .'<br>';
-echo $prevPrime .'<br>';
-echo $nextPrime .'<br>';
+echo 'Ряд от ' . $n . ' до ' . $m . '<br>';
+echo 'Медиана: ' . $middle . '<br>';
+echo 'Ближайшее простое число слева от медианы: ' . $prevPrime . '<br>';
+echo 'Ближайшее простое число справа от медианы: ' . $nextPrime . '<br>';
